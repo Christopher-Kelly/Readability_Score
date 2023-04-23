@@ -11,20 +11,16 @@ import java.util.regex.Pattern;
 public class Main {
     //regex = [\\w|\\d]+\\.*
     public static int syllable_counter(String word) {
-        char[] vowels = new char[]{'a', 'e', 'i', 'o', 'u', 'y'};
-        Pattern all_vowels = Pattern.compile("[aeiouy]");
-        Matcher all_vowel_matches = all_vowels.matcher(word);
-        int all_vowel_number = (int) all_vowel_matches.results().count();
+        String i = "(?i)[aiouy][aeiouy]*|e[aeiouy]*(?!d?\\b)";
+        Matcher m = Pattern.compile(i).matcher(word);
+        int count = 0;
 
-        Pattern all_vowels_illegal = Pattern.compile("[e][.\\s]|[aeiouy][aeiouy]");
-        Matcher all_vowel_matches_illegal = all_vowels_illegal.matcher(word);
-        int all_vowel_number_illegal = (int) all_vowel_matches_illegal.results().count();
-
-        if (all_vowel_number == 0) {
-            return 1;
-        } else {
-            return all_vowel_number - all_vowel_number_illegal;
+        while (m.find()) {
+            count++;
         }
+
+        // return at least 1
+        return Math.max(count, 1);
     }
 
     public static int[] easy_word_counter(String input) {
@@ -93,8 +89,8 @@ public class Main {
         return (float) (1.043 * Math.sqrt(polysyllables * (30 / sentences)) + 3.1291);
     }
 
-    public static float Coleman_liau(float average_char, float average_sentences) {
-        return (float) ((0.0588 * average_char) - (0.296 * average_sentences) - 15.8);
+    public static float Coleman_liau(double average_char, double average_sentences) {
+        return (float) (((0.0588 * average_char - 0.296 * average_sentences)) - 15.8);
     }
 
     public static float print_indexes(int[] statistics, String alg_choice, HashMap<Integer, String> age_brackets) {
@@ -137,7 +133,10 @@ public class Main {
                 average_age += Integer.parseInt(age_brackets.get(index));
                 break;
             case "CL":
-                readibility = Coleman_liau((statistics[0] / statistics[1]) * 100, (statistics[2] / statistics[1]) * 100);
+                double l = (double) statistics[0]/ (double) statistics[1] * 100;
+                double s = (double) statistics[2] / (double) statistics[1] * 100;
+
+                readibility = Coleman_liau(l,s);
                 index = (int) Math.ceil(readibility);
                 readbility_string = rounding(readibility);
                 if (index > 14) {

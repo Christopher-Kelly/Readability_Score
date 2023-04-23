@@ -1,0 +1,14 @@
+# Project exclude paths
+/.gradle/
+/Readability Score (Java)/task/build/
+/Readability Score (Java)/task/out/
+/Readability Score (Java)/task/out/production/classes/
+/Readability Score (Java)/task/out/test/classes/
+/Topics/Exception handling/Catching some exceptions/out/
+/Topics/Exception handling/Catching some exceptions/out/production/classes/
+/Topics/Exception handling/Method named process/out/
+/Topics/Exception handling/Method named process/out/production/classes/
+/Topics/Exception handling/Theory/out/
+/Topics/Exception handling/Theory/out/production/classes/
+/Topics/Exception handling/What exceptions can be handled/out/
+/Topics/Exception handling/What exceptions can be handled/out/production/classes/
